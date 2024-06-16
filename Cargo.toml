@@ -1,0 +1,35 @@
+[package]
+name = "mai-node"
+version = "0.1.0"
+edition = "2021"
+license = "BSD-3-Clause"
+repository = "https://github.com/moderately-ai/mai-node"
+keywords = ["machine-learning", "ai", "sdk"]
+
+[dependencies]
+# internal dependencies
+mai-sdk-core = { git = "https://github.com/moderately-ai/mai-sdk.git", branch = "main" }
+mai-sdk-plugins = { git = "https://github.com/moderately-ai/mai-sdk.git", branch = "main" }
+mai-sdk-runtime = { git = "https://github.com/moderately-ai/mai-sdk.git", branch = "main" }
+
+# common dependencies
+slog = "2.7"
+anyhow = { version = "1" }
+tokio = { version = "1.37", features = ["macros"] }
+async-channel = "2.3"
+
+# node dependneices
+clap = { version = "4.5.4", features = ["derive", "env"] }
+slog-async = "2.8.0"
+slog-term = "2.9.1"
+signal-hook = "0.3.17"
+
+[features]
+# platform specific features
+windows = ["cuda"]
+linux = ["cuda"]
+macos = ["metal"]
+
+# hardware specific features
+cuda = ["mai-sdk-plugins/cuda", "mai-sdk-runtime/cuda"]
+metal = ["mai-sdk-plugins/metal", "mai-sdk-runtime/metal"]
